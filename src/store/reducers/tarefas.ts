@@ -2,34 +2,42 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Tarefa from '../../models/Tarefa'
 import * as enums from '../../utils/enums/Tarefa'
 
+type TarefasState = {
+  itens: Tarefa[]
+}
+
+const initialState: TarefasState = {
+  itens: [
+    {
+      id: 1,
+      titulo: 'Tarefa 1',
+      descricao: 'Descrição da tarefa 1',
+      prioridade: enums.Prioridade.NORMAL,
+      status: enums.Status.CONCLUIDA
+    },
+    {
+      id: 2,
+      titulo: 'Tarefa 2',
+      descricao: 'Descrição da tarefa 2',
+      prioridade: enums.Prioridade.IMPORTANTE,
+      status: enums.Status.PENDENTE
+    },
+    {
+      id: 3,
+      titulo: 'Tarefa 3',
+      descricao: 'Descrição da tarefa 3',
+      prioridade: enums.Prioridade.URGENTE,
+      status: enums.Status.CONCLUIDA
+    }
+  ]
+}
+
 const tarefasSlice = createSlice({
   name: 'tarefas',
-  initialState: [
-    new Tarefa(
-      'Estutar Typescript',
-      enums.Prioridade.IMPORTANTE,
-      enums.Status.PENDENTE,
-      'Estudar os conceitos básicos do Typescript, como tipos, interfaces e classes. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.',
-      1
-    ),
-    new Tarefa(
-      'Estutar React',
-      enums.Prioridade.URGENTE,
-      enums.Status.CONCLUIDA,
-      'Estudar os conceitos básicos do React, como componentes, props e estado. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.',
-      2
-    ),
-    new Tarefa(
-      'Estutar JavaScript',
-      enums.Prioridade.URGENTE,
-      enums.Status.PENDENTE,
-      'Estudar os conceitos básicos do JavaScript, como variáveis, funções e objetos. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.',
-      3
-    )
-  ],
+  initialState: initialState,
   reducers: {
     remover: (state, action: PayloadAction<number>) => {
-      return state.filter((tarefa) => tarefa.id !== action.payload)
+      state.itens = state.itens.filter((tarefa) => tarefa.id !== action.payload)
     }
   }
 })
